@@ -1,6 +1,6 @@
 # Overview of the Docker container system
 
-<img src=https://github.com/sheffield-bioinformatics-core/rna-seq-in-galaxy/raw/gh-pages/media/TUOS_PRIMARY_LOGO_FULL%20COLOUR.png" height=100px align=right>
+<img src="https://github.com/sheffield-bioinformatics-core/rna-seq-in-galaxy/raw/gh-pages/media/TUOS_PRIMARY_LOGO_FULL%20COLOUR.png" height=100px align=right>
 
 Sheffield R meetup - 6th March 2018
 
