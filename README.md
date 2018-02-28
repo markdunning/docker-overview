@@ -45,9 +45,20 @@ docker run cat /etc/lsb-release
 docker run ubuntu:14.04 cat /etc/lsb-release
 ```
 
-## R
+## Run an interactive container
 
+```
+docker run -it ubuntu /bin/bash
+```
 
+- the `-it` arguments launches an interactive container
+- 
+
+## Volumes in Docker
+
+```
+docker run ubuntu ls
+```
 
 ## Running RStudio through Docker
 
