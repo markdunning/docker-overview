@@ -1,6 +1,6 @@
 # Overview of the Docker container system
 
-<img src="TUOS_PRIMARY_LOGO_FULL%20COLOUR.png" height=100px align=right>
+![UOS-logo](TUOS_PRIMARY_LOGO_FULL%20COLOUR.png)
 
 Sheffield R meetup - 6th March 2018
 
