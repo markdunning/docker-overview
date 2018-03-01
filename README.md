@@ -155,9 +155,15 @@ RUN apt-get update
 RUN apt-get install -y wget build-essential
 ```
 
+## Use Case 1:- Multiple Shiny apps on the same server, sharing the same R version
 
+- different maintainers of each app, one maintainer decides to upgrade R and all have to follow
 
-## Use Case 1:- Distributing software for a training course
+```
+docker pull crukcibioinformatics/camcapp
+```
+
+## Use Case 2:- Distributing software for a training course
 
 Several headaches can emerge when preparing the materials for a training course
 
@@ -226,7 +232,7 @@ WORKDIR /home/participant/Course_Materials/
 
 
 
-## Use Case 2:- Distributing supplementary data for a publication
+## Use Case 3:- Distributing supplementary data for a publication
 
 - Stephen Eglen of Department of Applied Mathematics and Theoretical Physics, University of Cambridge made the data and code for his paper available on github :+1:
 - furthermore, the scripts, data are available *with the appropriate version of R* as a docker container :+1::+1:
@@ -235,9 +241,8 @@ WORKDIR /home/participant/Course_Materials/
 docker run -d -p 8787:8787 sje30/waverepo
 ```
 
-## The elephant in the room
+## The elephant in the room...
 
-![](https://upload.wikimedia.org/wikipedia/commons/3/3b/The_Elephant_in_the_Room_Banksy-Barely_legal-2006.jpg)
 
 Sounds great so far! But...
 
