@@ -115,9 +115,19 @@ docker run -p 8787:8787 rocker/rstudio
 - username `rstudio` password `rstudio`
 - you have a version of RStudio working in your web browser!
 
-You can install whatever R packages you need in this container and analyse your data (provided you mount a volume with `-v`. 
+You can install whatever R packages you need in this container and analyse your data
 
-- once a docker has quit, it can be restarted with `docker start` and `docker attach`
+
+
+- you can mount a volume with `-v`.
+    + or there is an Upload option in the bottom-right file viewer
+- data (and scripts etc) can be exported with the Export menu item
+
+![](upload-and-export.png)
+
+Once a docker has quit, it can be restarted with `docker start` and `docker attach`
+
+
 
 ```
 docker start <name-of-container-that-just-exited>
