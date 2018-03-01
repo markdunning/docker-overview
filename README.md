@@ -81,10 +81,39 @@ docker run -it --rm -v
 
 ## Running R (and RStudio) through Docker
 
+The latest version of R and R devel are provided by the rocker project https://github.com/rocker-org/rocker
+
+```
+docker run --rm -it r-base R
+```
+
+- run the `r-base` docker image
+- run interatively (`-it`)
+- run the `R` executable
+
+For latest developmental version of R:-
+
+```
+docker run --rm -it r-devel R
+```
+
+Can also [get previous versions of R](https://hub.docker.com/r/library/r-base/tags/)
+
+- good if you need to re-run code that was written on a previous R version
+- good if you need to test code on latest version of R
+
+
 RStudio is also supported. See https://github.com/rocker-org/rocker/wiki/Using-the-RStudio-image
 
+- this time we do something slightly different
 
-
+```
+docker run -p 8787:8787 rocker/rstudio
+```
+- the `-p` argument opens a port in the docker container
+- open a web browser and enter the address `http://localhost:8787`
+- username `rstudio` password `rstudio`
+- you have a version of RStudio working in your web browser!
 
 ## The `Dockerfile`
 
