@@ -161,13 +161,15 @@ The creation of Docker images is specified by a Dockerfile. This is a text file 
 
 In this section we show how to create a Dockerfile and use this file to build a docker image. A useful reference is the [official Docker documentation on Dockerfiles](https://docs.docker.com/engine/reference/builder/), which goes into far more detail than we will here.
 
-In this example below we show the Dockerfile used to create a Ubuntu image with the build-essential and wget tools installed.
+In this example below we show the Dockerfile used to create a Ubuntu image use git to clone a repository and install some packages
 
 ```
 FROM ubuntu
 MAINTAINER YOU NAME<your.name@sheffield.ac.uk>
 RUN apt-get update
-RUN apt-get install -y wget build-essential
+RUN apt-get install -y wget build-essential git
+RUN git clone.....
+RUN R -e 'install.packages(....)'
 ```
 
 ## Use Case 1:- Multiple Shiny apps on the same server, sharing the same R version
@@ -193,59 +195,6 @@ Several headaches can emerge when preparing the materials for a training course
 ```
 docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
 ```
-
-
-
-
-```
-FROM bioconductor/release_base2
-MAINTAINER Mark Dunning<mark.dunning@cruk.cam.ac.uk>
-
-## Install packages from Ubuntu repositories
-RUN rm -rf /var/lib/apt/lists/
-RUN apt-get update 
-RUN apt-get install --fix-missing -y git samtools fastx-toolkit python-dev cmake bwa picard-tools bzip2 tabix bedtools build-essential git-core cmake zlib1g-dev libncurses-dev libbz2-dev liblzma-dev man
- 
-## Download and install fastqc
-
-WORKDIR /tmp
-RUN wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip -P /tmp
-RUN unzip fastqc_v0.11.3.zip
-RUN sudo chmod 755 FastQC/fastqc
-RUN ln -s $(pwd)/FastQC/fastqc /usr/bin/fastqc
-
-
-## Make directory structure
-RUN mkdir -p /home/participant/Course_Materials/Day1
-RUN mkdir -p /home/participant/Course_Materials/Day2
-RUN mkdir -p /home/participant/Course_Materials/Day3
-RUN mkdir -p /home/participant/Course_Materials/Day4
-
-## Install required R packages
-COPY installBioCPkgs.R /home/participant/Course_Materials/
-RUN R -f /home/participant/Course_Materials/installBioCPkgs.R
-
-
-## Populate directories for each day
-COPY Day1/* /home/participant/Course_Materials/Day1/
-COPY Day2/* /home/participant/Course_Materials/Day2/
-COPY Day3/* /home/participant/Course_Materials/Day3/
-COPY Day4/* /home/participant/Course_Materials/Day4/
-
-## Create data, reference data directories
-## These will need to be mounted with local directories containing the data when running the container
-## scripts are included to download the relevant files
-
-VOLUME /data/
-VOLUME /reference_data/
-
-WORKDIR /home/participant/Course_Materials/
-
-
-```
-
-
-
 
 ## Use Case 3:- Distributing supplementary data for a publication
 
