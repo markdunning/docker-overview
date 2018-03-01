@@ -115,6 +115,21 @@ docker run -p 8787:8787 rocker/rstudio
 - username `rstudio` password `rstudio`
 - you have a version of RStudio working in your web browser!
 
+You can install whatever R packages you need in this container and analyse your data (provided you mount a volume with `-v`. 
+
+- once a docker has quit, it can be restarted with `docker start` and `docker attach`
+
+```
+docker start <name-of-container-that-just-exited>
+docker attach <name-of-container-that-just-exited>
+```
+
+You can then build a new image 
+
+```
+docker commit <name-of-container-that-just-exited> <new image>
+```
+
 ## The `Dockerfile`
 
 The `Dockerfile` is the recommended way of composing your own image
@@ -172,7 +187,15 @@ WORKDIR /home/participant/Course_Materials/
 
 ## Use Case 1:- Distributing software for a training course
 
+```
+docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
+```
+
+
+
 ## Use Case 2:- Distributing supplementary data for a publication
+
+Stephen Eglen of University of Cambridge made the data and code for his paper available on github :+1:
 
 ## The elephant in the room
 
