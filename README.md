@@ -1,5 +1,6 @@
 # Overview of the Docker container system
 
+![](https://www.docker.com/sites/default/files/vertical_large.png)
 
 Sheffield R meetup - 6th March 2018
 
@@ -17,39 +18,52 @@ email: [bioinformatics-core@sheffield.ac.uk](bioinformatics-core@sheffield.ac.uk
 https://docs.docker.com/engine/docker-overview
 
 
-## Obtaining Docker
+[Docker](https://www.docker.com) is an open platform for developers to build and ship applications, whether on laptops, servers in a data center, or the cloud.
 
-- Recent [Mac OSX](https://docs.docker.com/docker-for-mac) (10.10.3 and newer) and [Windows 10](https://docs.docker.com/docker-for-windows) have easy installation
-- Older OS require [Docker Toolbox](https://docs.docker.com/toolbox/overview). Older Windows may require some *virtualisation* settings
-- Can install in Unix through `apt-get`
+- Or, it is a (relatively) painless way for you to install and try out Bioinformatics software. 
+- You can think of it as an isolated environment inside your exising operating system where you can install and run software without messing with the main OS
+- Really useful for testing software
+- Clear benefits for working reproducibly
+    + instead of just distributing the code used for a paper, you can effectively share the computer you did the analysis on
+- For those of you that have used Virtual Machines, it is a similar concept
+## Installing Docker
 
-## Running your first docker container
+### Mac
 
-If using Windows or Mac open a Command Prompt or terminal
+- [Mac OSX - 10.10.3 or newer](https://www.docker.com/docker-mac)
+- [Older Macs](https://download.docker.com/mac/stable/DockerToolbox.pkg)
+
+### Windows
+
+- [Windows 10](https://www.docker.com/docker-windows)
+    + also requires some virtualisation settings
+- [Older Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
+
+
+Once you have installed Docker using the insructions above, you can open a terminal (Mac) or command prompt (Windows) and run the following to download a container for the Ubuntu operating system;
+
+```
+docker pull ubuntu
+```
+
+To run any software inside the container we can do;
 
 ```
 docker run ubuntu echo "Hello World"
 ```
 
-- downloads the `ubuntu` operating system image (if not already present)
-- launches the ubuntu container
-- runs the command echo "Hello World"
-- exits
+- run the docker container for the Ubuntu operating system
+- run the `echo` command within this operating system
+- exit
+
+To use the container in interactive mode we have to specify a `-it` argument. Which basically means that it doesn't exit straight away, but instead runs the `bash` command to get a terminal prompt
+
+*NB* the `--rm` means that the container is deleted on exit, otherwise your disk could get clogged up with lots of exited containers
 
 ```
-docker run ubuntu date
-docker run cat /etc/lsb-release
-docker run ubuntu:14.04 cat /etc/lsb-release
+docker run -it --rm ubuntu
 ```
 
-## Run an interactive container
-
-```
-docker run -it ubuntu /bin/bash
-```
-
-- the `-it` arguments launches an interactive container
-- 
 
 ## Volumes in Docker
 
