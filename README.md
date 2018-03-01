@@ -57,6 +57,7 @@ To run any software inside the container we can do;
 ```
 docker run ubuntu echo "Hello World"
 ```
+:party::party:
 
 - run the docker container for the Ubuntu operating system
 - run the `echo` command within this operating system
