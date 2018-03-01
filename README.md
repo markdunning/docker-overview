@@ -64,19 +64,28 @@ docker run ubuntu echo "Hello World"
 
 To use the container in interactive mode we have to specify a `-it` argument. Which basically means that it doesn't exit straight away, but instead runs the `bash` command to get a terminal prompt
 
-*NB* the `--rm` means that the container is deleted on exit, otherwise your disk could get clogged up with lots of exited containers
 
 ```
 docker run -it --rm ubuntu
 ```
-
+- the `--rm` means that the container is deleted on exit, otherwise your disk could get clogged up with lots of exited containers
+- if no command is specified, you get a shell prompt
 
 ## Volumes in Docker
 
 You'll notice that when you launch a container, you don't automatically have access to the files on your OS. In Docker, we can mount *volumes* using the -v argument to make files accessible e.g. `-v /PATH/TO/YOUR/data:/data` inside the container.
 
 ```
-docker run -it --rm -v 
+## should say that no file or directory exists
+docker run --rm ubuntu ls /data
+
+## If on Windows, need correct path separator
+docker run --rm -v c:\work:/data ubuntu ls /data
+
+## On Unix it would be something more sensible, like
+
+docker run --rm -v c/home/USER/work:/data ubuntu ls /data
+
 ```
 
 ## Running R (and RStudio) through Docker
@@ -87,8 +96,8 @@ The latest version of R and R devel are provided by the rocker project https://g
 docker run --rm -it r-base R
 ```
 
-- run the `r-base` docker image
 - run interatively (`-it`)
+- run the `r-base` docker image
 - run the `R` executable
 
 For latest developmental version of R:-
@@ -125,6 +134,7 @@ N.B. Python fans needn't feel left out; there are docker containers for [jupyter
 
 ![](upload-and-export.png)
 
+
 Once a docker container has quit, you can jump back in with `docker start` and `docker attach`
 
 
@@ -140,13 +150,18 @@ You can then build a new image
 docker commit <name-of-container-that-just-exited> <new image>
 ```
 
+There may already be a docker container for popular sets of tools
+
+- e.g. the [tidyverse](https://hub.docker.com/r/rocker/tidyverse/)
+- [bioconductor](https://hub.docker.com/r/bioconductor/release_base/)
+
 ## The `Dockerfile`
 
 The creation of Docker images is specified by a Dockerfile. This is a text file containing the sequence of instructions required to re-create your image from some starting point, which could be the standard Ubuntu image. Essentially we list the commands we use, step-by-step to install all the software required. If you already have a shell script to install your software, then translating to a Dockerfile is relatively painless.
 
 In this section we show how to create a Dockerfile and use this file to build a docker image. A useful reference is the [official Docker documentation on Dockerfiles](https://docs.docker.com/engine/reference/builder/), which goes into far more detail than we will here.
 
-In this example belowd we show the Dockerfile used to create a Ubuntu image with the build-essential and wget tools installed.
+In this example below we show the Dockerfile used to create a Ubuntu image with the build-essential and wget tools installed.
 
 ```
 FROM ubuntu
