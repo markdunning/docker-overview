@@ -237,6 +237,8 @@ docker run -d -p 8787:8787 sje30/waverepo
 
 ## The elephant in the room
 
+![](https://upload.wikimedia.org/wikipedia/commons/3/3b/The_Elephant_in_the_Room_Banksy-Barely_legal-2006.jpg)
+
 Sounds great so far! But...
 
 - when you run a Docker container you have super-user access rights inside that container. Unix admin people that manage HPC systems don't like this.
