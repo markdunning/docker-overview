@@ -1,10 +1,7 @@
 # Overview of the Docker container system
 
-![UOS-logo](TUOS_PRIMARY_LOGO_FULL%20COLOUR.png)
 
 Sheffield R meetup - 6th March 2018
-
-
 
 Longer version of materials prepared for CRUK Cambridge available [here](https://bioinformatics-core-shared-training.github.io/docker-4-bioinformatics/)
 
