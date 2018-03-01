@@ -15,6 +15,7 @@ twitter: [@SheffBioinfCore](https://twitter.com/SheffBioinfCore)
 email: [bioinformatics-core@sheffield.ac.uk](bioinformatics-core@sheffield.ac.uk)
 
 ## Basics
+
 https://docs.docker.com/engine/docker-overview
 
 
@@ -26,6 +27,9 @@ https://docs.docker.com/engine/docker-overview
 - Clear benefits for working reproducibly
     + instead of just distributing the code used for a paper, you can effectively share the computer you did the analysis on
 - For those of you that have used Virtual Machines, it is a similar concept
+- However, they are more lightweight and easier to distribute
+- Images are combined in a layered system
+
 ## Installing Docker
 
 ### Mac
@@ -35,12 +39,13 @@ https://docs.docker.com/engine/docker-overview
 
 ### Windows
 
+(may require some messing around with virtualisation or Hyper-V)
+
 - [Windows 10](https://www.docker.com/docker-windows)
-    + also requires some virtualisation settings
 - [Older Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
 
 
-Once you have installed Docker using the insructions above, you can open a terminal (Mac) or command prompt (Windows) and run the following to download a container for the Ubuntu operating system;
+Once you have installed Docker using the insructions above, you can open a terminal (Mac) or command prompt (Windows) and run the following to download an image for the Ubuntu operating system;
 
 ```
 docker pull ubuntu
@@ -67,11 +72,11 @@ docker run -it --rm ubuntu
 
 ## Volumes in Docker
 
-```
-docker run ubuntu ls
-```
+You'll notice that when you launch
 
-## Running RStudio through Docker
+## Running R (and RStudio) through Docker
+
+
 
 ## Use Case 1:- Distributing software for a training course
 
@@ -79,3 +84,10 @@ docker run ubuntu ls
 
 ## The elephant in the room
 
+Docker should be a great solution for shared systems (e.g. HPC) where typically everyone installs their own versions of R. However, when you run a Docker container you have super-user access rights inside that container. Unix admin people that manage HPC systems don't like this.
+
+There is an alternative....
+
+Singularity
+
+![](http://singularity.lbl.gov/images/logo/logo.svg)
