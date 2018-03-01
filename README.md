@@ -23,6 +23,7 @@ https://docs.docker.com/engine/docker-overview
 
 - Or, it is a (relatively) painless way for you to install and try out Bioinformatics software. 
 - You can think of it as an isolated environment inside your exising operating system where you can install and run software without messing with the main OS
+    + potentially a good way for beginners to learn command-line tools?
 - Really useful for testing software
 - Clear benefits for working reproducibly
     + instead of just distributing the code used for a paper, you can effectively share the computer you did the analysis on
@@ -72,10 +73,72 @@ docker run -it --rm ubuntu
 
 ## Volumes in Docker
 
-You'll notice that when you launch
+You'll notice that when you launch a container, you don't automatically have access to the files on your OS. In Docker, we can mount *volumes* using the -v argument to make files accessible e.g. `-v /PATH/TO/YOUR/data:/data` inside the container.
+
+```
+docker run -it --rm -v 
+```
 
 ## Running R (and RStudio) through Docker
 
+RStudio is also supported. See https://github.com/rocker-org/rocker/wiki/Using-the-RStudio-image
+
+
+
+
+## The `Dockerfile`
+
+The `Dockerfile` is the recommended way of composing your own image
+
+- stating the starting point for your image (e.g. Ubuntu)
+- listing the commands to install your libraries etc
+
+```
+FROM bioconductor/release_base2
+MAINTAINER Mark Dunning<mark.dunning@cruk.cam.ac.uk>
+
+## Install packages from Ubuntu repositories
+RUN rm -rf /var/lib/apt/lists/
+RUN apt-get update 
+RUN apt-get install --fix-missing -y git samtools fastx-toolkit python-dev cmake bwa picard-tools bzip2 tabix bedtools build-essential git-core cmake zlib1g-dev libncurses-dev libbz2-dev liblzma-dev man
+ 
+## Download and install fastqc
+
+WORKDIR /tmp
+RUN wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip -P /tmp
+RUN unzip fastqc_v0.11.3.zip
+RUN sudo chmod 755 FastQC/fastqc
+RUN ln -s $(pwd)/FastQC/fastqc /usr/bin/fastqc
+
+
+## Make directory structure
+RUN mkdir -p /home/participant/Course_Materials/Day1
+RUN mkdir -p /home/participant/Course_Materials/Day2
+RUN mkdir -p /home/participant/Course_Materials/Day3
+RUN mkdir -p /home/participant/Course_Materials/Day4
+
+## Install required R packages
+COPY installBioCPkgs.R /home/participant/Course_Materials/
+RUN R -f /home/participant/Course_Materials/installBioCPkgs.R
+
+
+## Populate directories for each day
+COPY Day1/* /home/participant/Course_Materials/Day1/
+COPY Day2/* /home/participant/Course_Materials/Day2/
+COPY Day3/* /home/participant/Course_Materials/Day3/
+COPY Day4/* /home/participant/Course_Materials/Day4/
+
+## Create data, reference data directories
+## These will need to be mounted with local directories containing the data when running the container
+## scripts are included to download the relevant files
+
+VOLUME /data/
+VOLUME /reference_data/
+
+WORKDIR /home/participant/Course_Materials/
+
+
+```
 
 
 ## Use Case 1:- Distributing software for a training course
