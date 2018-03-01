@@ -117,19 +117,19 @@ docker run -p 8787:8787 rocker/rstudio
 
 You can install whatever R packages you need in this container and analyse your data
 
-
+N.B. Python fans needn't feel left out; there are docker containers for [jupyter](https://hub.docker.com/r/jupyter/notebook/) too.
 
 - you can mount a volume with `-v`.
-    + or there is an Upload option in the bottom-right file viewer
+    + or there is an Upload option in the file viewer
 - data (and scripts etc) can be exported with the Export menu item
 
 ![](upload-and-export.png)
 
-Once a docker has quit, it can be restarted with `docker start` and `docker attach`
-
+Once a docker container has quit, you can jump back in with `docker start` and `docker attach`
 
 
 ```
+docker ps ##not name of container that just quit
 docker start <name-of-container-that-just-exited>
 docker attach <name-of-container-that-just-exited>
 ```
@@ -142,10 +142,39 @@ docker commit <name-of-container-that-just-exited> <new image>
 
 ## The `Dockerfile`
 
-The `Dockerfile` is the recommended way of composing your own image
+The creation of Docker images is specified by a Dockerfile. This is a text file containing the sequence of instructions required to re-create your image from some starting point, which could be the standard Ubuntu image. Essentially we list the commands we use, step-by-step to install all the software required. If you already have a shell script to install your software, then translating to a Dockerfile is relatively painless.
 
-- stating the starting point for your image (e.g. Ubuntu)
-- listing the commands to install your libraries etc
+In this section we show how to create a Dockerfile and use this file to build a docker image. A useful reference is the [official Docker documentation on Dockerfiles](https://docs.docker.com/engine/reference/builder/), which goes into far more detail than we will here.
+
+In this example belowd we show the Dockerfile used to create a Ubuntu image with the build-essential and wget tools installed.
+
+```
+FROM ubuntu
+MAINTAINER YOU NAME<your.name@sheffield.ac.uk>
+RUN apt-get update
+RUN apt-get install -y wget build-essential
+```
+
+
+
+## Use Case 1:- Distributing software for a training course
+
+Several headaches can emerge when preparing the materials for a training course
+
+- if the course venue has no desktop machines, participants will need to bring their own machines
+    + so they will need to install software beforehand
+    + challenging for beginners
+- docker presents a potential solution
+    + (however, they will still need to install docker - which could still be a barrier for some)
+- distributing materials to other participants who can't make the class, or who want to attend remotely
+- when developing materials in a team, need to agree on common software versions etc
+
+```
+docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
+```
+
+
+
 
 ```
 FROM bioconductor/release_base2
@@ -195,21 +224,22 @@ WORKDIR /home/participant/Course_Materials/
 ```
 
 
-## Use Case 1:- Distributing software for a training course
-
-```
-docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
-```
-
 
 
 ## Use Case 2:- Distributing supplementary data for a publication
 
-Stephen Eglen of University of Cambridge made the data and code for his paper available on github :+1:
+- Stephen Eglen of Department of Applied Mathematics and Theoretical Physics, University of Cambridge made the data and code for his paper available on github :+1:
+- furthermore, the scripts, data are available *with the appropriate version of R* as a docker container :+1::+1:
+
+```
+docker run -d -p 8787:8787 sje30/waverepo
+```
 
 ## The elephant in the room
 
-Docker should be a great solution for shared systems (e.g. HPC) where typically everyone installs their own versions of R. However, when you run a Docker container you have super-user access rights inside that container. Unix admin people that manage HPC systems don't like this.
+Sounds great so far! But...
+
+- when you run a Docker container you have super-user access rights inside that container. Unix admin people that manage HPC systems don't like this.
 
 There is an alternative....
 
