@@ -160,9 +160,9 @@ There may already be a docker container for popular sets of tools
 
 The creation of Docker images is specified by a Dockerfile. This is a text file containing the sequence of instructions required to re-create your image from some starting point, which could be the standard Ubuntu image. Essentially we list the commands we use, step-by-step to install all the software required. If you already have a shell script to install your software, then translating to a Dockerfile is relatively painless.
 
-In this section we show how to create a Dockerfile and use this file to build a docker image. A useful reference is the [official Docker documentation on Dockerfiles](https://docs.docker.com/engine/reference/builder/), which goes into far more detail than we will here.
+A useful reference is the [official Docker documentation on Dockerfiles](https://docs.docker.com/engine/reference/builder/), which goes into far more detail than we will here.
 
-In this example below we show the Dockerfile used to create a Ubuntu image use git to clone a repository and install some packages
+The example below shows the Dockerfile used to create a Ubuntu image use git to clone a repository and install some packages
 
 ```
 FROM ubuntu
@@ -173,15 +173,8 @@ RUN git clone.....
 RUN R -e 'install.packages(....)'
 ```
 
-## Use Case 1:- Multiple Shiny apps on the same server, sharing the same R version
 
-- different maintainers of each app, one maintainer decides to upgrade R and all have to follow
-
-```
-docker pull crukcibioinformatics/camcapp
-```
-
-## Use Case 2:- Distributing software for a training course
+## Use Case 1:- Distributing software for a training course
 
 Several headaches can emerge when preparing the materials for a training course
 
@@ -197,7 +190,7 @@ Several headaches can emerge when preparing the materials for a training course
 docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
 ```
 
-## Use Case 3:- Distributing supplementary data for a publication
+## Use Case 2:- Distributing supplementary data for a publication
 
 - Stephen Eglen of Department of Applied Mathematics and Theoretical Physics, University of Cambridge made the data and code for his paper available on github :+1:
 - furthermore, the scripts, data are available *with the appropriate version of R* as a docker container :+1::+1:
