@@ -46,13 +46,13 @@ https://docs.docker.com/engine/docker-overview
 - [Older Windows](https://download.docker.com/win/stable/DockerToolbox.exe)
 
 
-Once you have installed Docker using the insructions above, you can open a terminal (Mac) or command prompt (Windows) and run the following to download an image for the Ubuntu operating system;
+Once you have installed Docker using the insructions above, you can open a terminal (Mac) or command prompt (Windows) and run the following to download an image for the Ubuntu operating system from [Dockerhub](www.dockerhub.com);
 
 ```
 docker pull ubuntu
 ```
 
-To run any software inside the container we can do;
+To run a command inside this new environment software we can do;
 
 ```
 docker run ubuntu echo "Hello World"
@@ -71,6 +71,13 @@ docker run -it --rm ubuntu
 ```
 - the `--rm` means that the container is deleted on exit, otherwise your disk could get clogged up with lots of exited containers
 - if no command is specified, you get a shell prompt
+
+- the `ubuntu` image (or `centos`) is often used as a base image upon which other more complicated images are based
+- when you want another image, you only have to download the changes that have been made 
+        + i.e. don't need to download `ubuntu` again
+- more compact images, easier to distribute
+- compare to virtual machine
+
 
 ## Volumes in Docker
 
@@ -96,7 +103,7 @@ The latest version of R and R devel are provided by the rocker project https://g
 ```
 docker run --rm -it r-base R
 ```
-
+- pull the latest `r-base` image, if you don't have it
 - run interatively (`-it`)
 - run the `r-base` docker image
 - run the `R` executable
@@ -173,6 +180,12 @@ RUN git clone.....
 RUN R -e 'install.packages(....)'
 ```
 
+The `docker build` command will build a new image from a `Dockerfile`. With `docker push` you can distribute this on [dockerhub](http://www.dockerhub.com) once you have a user name.
+
+```
+docker build -t=my_username/my_new_image .
+docker push
+```
 
 ## Use Case 1:- Distributing software for a training course
 
@@ -192,8 +205,8 @@ docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
 
 ## Use Case 2:- Distributing supplementary data for a publication
 
-- Stephen Eglen of Department of Applied Mathematics and Theoretical Physics, University of Cambridge made the data and code for his paper available on github :+1:
-- furthermore, the scripts, data are available *with the appropriate version of R* as a docker container :+1::+1:
+- Stephen Eglen of Department of Applied Mathematics and Theoretical Physics, University of Cambridge made the data and code for his paper available [on github](https://github.com/sje30/waverepo) :+1:
+- furthermore, the scripts, data are available *with the appropriate version of R* [as a docker container](https://hub.docker.com/r/sje30/waverepo/) :+1::+1:
 
 ```
 docker run -d -p 8787:8787 sje30/waverepo
