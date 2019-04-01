@@ -161,7 +161,11 @@ docker commit <name-of-container-that-just-exited> <new image>
 There may already be a docker container for popular sets of tools
 
 - e.g. the [tidyverse](https://hub.docker.com/r/rocker/tidyverse/)
-- [bioconductor](https://hub.docker.com/r/bioconductor/release_base/)
+- [bioconductor](https://hub.docker.com/r/bioconductor/release_core2)
+
+```
+docker run --rm -p 8787:8787 -e PASSWORD=PASSWORD bioconductor/release_core2
+```
 
 ## The `Dockerfile`
 
@@ -198,9 +202,9 @@ Several headaches can emerge when preparing the materials for a training course
     + (however, they will still need to install docker - which could still be a barrier for some)
 - distributing materials to other participants who can't make the class, or who want to attend remotely
 - when developing materials in a team, need to agree on common software versions etc
-
+- could pre-install the container on an AWS instance
 ```
-docker run --rm -p 8787:8787 markdunning/cancer-genome-toolkit
+docker run --rm -p 6080:80 markdunning/rnaseq-toolkit
 ```
 
 ## Use Case 2:- Distributing supplementary data for a publication
