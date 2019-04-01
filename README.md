@@ -204,6 +204,7 @@ Several headaches can emerge when preparing the materials for a training course
 - when developing materials in a team, need to agree on common software versions etc
 - could pre-install the container on an AWS instance
 ```
+docker pull markdunning/rnaseq-toolkit
 docker run --rm -p 6080:80 markdunning/rnaseq-toolkit
 ```
 
@@ -214,6 +215,18 @@ docker run --rm -p 6080:80 markdunning/rnaseq-toolkit
 
 ```
 docker run -d -p 8787:8787 sje30/waverepo
+```
+
+## Use case 3:- Reproducible analysis
+
+Issue: doing several analyses at same time, some of which may require latest version of R etc. How can we ensure that previous analyses still run. Within each project, create a `Dockerfile` to build a container for the analysis.
+
+```
+FROM bioconductor/release_base2:R3.5.3_Bioc3.8
+MAINTAINER Mark Dunning<m.j.dunning@sheffield.ac.uk>
+RUN R -e 'install.packages("BiocManager")'
+RUN R -e 'BiocManager::install("tidyverse")'
+RUN R -e 'BiocManager::install("DEXSeq")'
 ```
 
 ## The elephant in the room...
@@ -228,3 +241,19 @@ There is an alternative....
 Singularity
 
 ![](http://singularity.lbl.gov/images/logo/logo.svg)
+
+You can build a singularity image from a docker container
+
+- Use the docker image on dockerhub at `markdunning/dexseq-analysis` (build from `Dockerfile` above) to build an image. You need sudo access to do this.
+- Copy the image to `sharc`
+- Run the `exec` command to Run `R` with an analysis script
+
+
+```
+### Run where you have sudo access
+sudo singularity build singularity/dexseq docker://markdunning/dexseq-analysis
+## Copy the image to sharc /shared/bioinformatics_core1/Shared/software/singularity/dexseq
+## On sharc
+singularity exec /shared/bioinformatics_core1/Shared/software/singularity/dexseq R -f dexseq_analysis.R
+
+```
