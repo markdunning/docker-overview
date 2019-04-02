@@ -3,6 +3,7 @@
 ![](https://www.docker.com/sites/default/files/vertical_large.png)
 
 Sheffield R meetup - 6th March 2018
+(Updated for SITraN journal club - 2nd April 2019)
 
 Longer version of materials prepared for CRUK Cambridge available [here](https://bioinformatics-core-shared-training.github.io/docker-4-bioinformatics/)
 
@@ -257,3 +258,5 @@ sudo singularity build singularity/dexseq docker://markdunning/dexseq-analysis
 singularity exec /shared/bioinformatics_core1/Shared/software/singularity/dexseq R -f dexseq_analysis.R
 
 ```
+
+More documentation is available for [using singularity on sharc](http://docs.hpc.shef.ac.uk/en/latest/sharc/software/apps/singularity.html)
