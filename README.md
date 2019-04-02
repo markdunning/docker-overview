@@ -53,6 +53,8 @@ Once you have installed Docker using the insructions above, you can open a termi
 docker pull ubuntu
 ```
 
+N.B. on Linux, you may need to run docker with sudo, unless you apply [this fix](https://docs.docker.com/install/linux/linux-postinstall/)
+
 To run a command inside this new environment software we can do;
 
 ```
@@ -228,6 +230,35 @@ MAINTAINER Mark Dunning<m.j.dunning@sheffield.ac.uk>
 RUN R -e 'install.packages("BiocManager")'
 RUN R -e 'BiocManager::install("tidyverse")'
 RUN R -e 'BiocManager::install("DEXSeq")'
+```
+
+## Useful docker commands
+
+To see what containers you have run recently
+
+```
+docker ps -a
+```
+
+If you find your disk filling up with docker images, there are convenient one-liners for removing all containers and images.
+
+Don’t run this now, unless you want everything you’ve been working on to be deleted!
+
+```
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -q)
+```
+
+You can go back into the environment of a container that has been exited. Firstly, we make sure the container is running by using docker start:-
+
+```
+docker start <container_ID>
+```
+
+We can then use `docker attach`. Note that you will have to press ENTER twice in order to get a new command prompt within the container.
+
+```
+docker attach <container_ID>
 ```
 
 ## The elephant in the room...
